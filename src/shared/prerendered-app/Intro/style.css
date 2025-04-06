@@ -365,3 +365,10 @@
     display: none;
   }
 }
+
+.windowcontainer {
+  border-radius: 2rem 2rem 0 0;
+  border-top: 4px solid var(--dim-blue);
+  border-left: 4px solid var(--dim-blue);
+  border-right: 4px solid var(--dim-blue);
+}

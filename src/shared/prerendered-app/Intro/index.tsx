@@ -227,130 +227,151 @@ export default class Intro extends Component<Props, State> {
   ) {
     return (
       <div class={style.intro}>
-        <input
-          class={style.hide}
-          ref={linkRef(this, 'fileInput')}
-          type="file"
-          onChange={this.onFileChange}
-        />
-        <div class={style.main}>
-          {!__PRERENDER__ && (
-            <canvas
-              ref={linkRef(this, 'blobCanvas')}
-              class={style.blobCanvas}
-            />
-          )}
-          <h1 class={style.logoContainer}>
-            <img
-              class={style.logo}
-              src={logoWithText}
-              alt="Squoosh"
-              width="539"
-              height="162"
-            />
-          </h1>
-          <div class={style.loadImg}>
-            {showBlobSVG && (
-              <svg
-                class={style.blobSvg}
-                viewBox="-1.25 -1.25 2.5 2.5"
-                preserveAspectRatio="xMidYMid slice"
-              >
-                {startBlobs.map((points) => (
-                  <path
-                    d={points
-                      .map((point, i) => {
-                        const nextI = i === points.length - 1 ? 0 : i + 1;
-                        let d = '';
-                        if (i === 0) {
-                          d += `M${point[2]} ${point[3]}`;
-                        }
-                        return (
-                          d +
-                          `C${point[4]} ${point[5]} ${points[nextI][0]} ${points[nextI][1]} ${points[nextI][2]} ${points[nextI][3]}`
-                        );
-                      })
-                      .join('')}
-                  />
-                ))}
-              </svg>
+        <div class={style.windowcontainer}>
+          <input
+            class={style.hide}
+            ref={linkRef(this, 'fileInput')}
+            type="file"
+            onChange={this.onFileChange}
+          />
+          <div class={style.main}>
+            {!__PRERENDER__ && (
+              <canvas
+                ref={linkRef(this, 'blobCanvas')}
+                class={style.blobCanvas}
+              />
             )}
-            <div
-              class={style.loadImgContent}
-              style={{ visibility: __PRERENDER__ ? 'hidden' : '' }}
-            >
-              <button class={style.loadBtn} onClick={this.onOpenClick}>
-                <svg viewBox="0 0 24 24" class={style.loadIcon}>
-                  <path d="M19 7v3h-2V7h-3V5h3V2h2v3h3v2h-3zm-3 4V8h-3V5H5a2 2 0 00-2 2v12c0 1.1.9 2 2 2h12a2 2 0 002-2v-8h-3zM5 19l3-4 2 3 3-4 4 5H5z" />
+            <h1 class={style.logoContainer}>
+              <img
+                class={style.logo}
+                src={logoWithText}
+                alt="Squoosh"
+                width="539"
+                height="162"
+              />
+            </h1>
+            <div class={style.loadImg}>
+              {showBlobSVG && (
+                <svg
+                  class={style.blobSvg}
+                  viewBox="-1.25 -1.25 2.5 2.5"
+                  preserveAspectRatio="xMidYMid slice"
+                >
+                  {startBlobs.map((points) => (
+                    <path
+                      d={points
+                        .map((point, i) => {
+                          const nextI = i === points.length - 1 ? 0 : i + 1;
+                          let d = '';
+                          if (i === 0) {
+                            d += `M${point[2]} ${point[3]}`;
+                          }
+                          return (
+                            d +
+                            `C${point[4]} ${point[5]} ${points[nextI][0]} ${points[nextI][1]} ${points[nextI][2]} ${points[nextI][3]}`
+                          );
+                        })
+                        .join('')}
+                    />
+                  ))}
                 </svg>
-              </button>
-              <div>
-                <span class={style.dropText}>Drop </span>OR{' '}
-                {supportsClipboardAPI ? (
-                  <button class={style.pasteBtn} onClick={this.onPasteClick}>
-                    Paste
-                  </button>
-                ) : (
-                  'Paste'
-                )}
+              )}
+              <div
+                class={style.loadImgContent}
+                style={{ visibility: __PRERENDER__ ? 'hidden' : '' }}
+              >
+                <button class={style.loadBtn} onClick={this.onOpenClick}>
+                  <svg viewBox="0 0 24 24" class={style.loadIcon}>
+                    <path d="M19 7v3h-2V7h-3V5h3V2h2v3h3v2h-3zm-3 4V8h-3V5H5a2 2 0 00-2 2v12c0 1.1.9 2 2 2h12a2 2 0 002-2v-8h-3zM5 19l3-4 2 3 3-4 4 5H5z" />
+                  </svg>
+                </button>
+                <div>
+                  <span class={style.dropText}>Drop </span>OR{' '}
+                  {supportsClipboardAPI ? (
+                    <button class={style.pasteBtn} onClick={this.onPasteClick}>
+                      Paste
+                    </button>
+                  ) : (
+                    'Paste'
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class={style.demosContainer}>
-          <svg viewBox="0 0 1920 140" class={style.topWave}>
-            <path
-              d="M1920 0l-107 28c-106 29-320 85-533 93-213 7-427-36-640-50s-427 0-533 7L0 85v171h1920z"
-              class={style.subWave}
-            />
-            <path
-              d="M0 129l64-26c64-27 192-81 320-75 128 5 256 69 384 64 128-6 256-80 384-91s256 43 384 70c128 26 256 26 320 26h64v96H0z"
-              class={style.mainWave}
-            />
-          </svg>
-          <div class={style.contentPadding}>
-            <p class={style.demoTitle}>
-              Or <strong>try one</strong> of these:
-            </p>
-            <ul class={style.demos}>
-              {demos.map((demo, i) => (
-                <li>
-                  <button
-                    class="unbutton"
-                    onClick={(event) => this.onDemoClick(i, event)}
-                  >
-                    <div class={style.demoContainer}>
-                      <div class={style.demoIconContainer}>
-                        <img
-                          class={style.demoIcon}
-                          src={demo.iconUrl}
-                          alt={demo.description}
-                        />
-                        {fetchingDemoIndex === i && (
-                          <div class={style.demoLoader}>
-                            <loading-spinner />
-                          </div>
-                        )}
+          <div class={style.demosContainer}>
+            <svg viewBox="0 0 1920 140" class={style.topWave}>
+              <path
+                d="M1920 0l-107 28c-106 29-320 85-533 93-213 7-427-36-640-50s-427 0-533 7L0 85v171h1920z"
+                class={style.subWave}
+              />
+              <text
+                x="50%"
+                y="50%"
+                text-anchor="middle"
+                dominant-baseline="middle"
+              >
+                AI Powered
+              </text>
+              <path
+                d="M0 129l64-26c64-27 192-81 320-75 128 5 256 69 384 64 128-6 256-80 384-91s256 43 384 70c128 26 256 26 320 26h64v96H0z"
+                class={style.mainWave}
+              />
+            </svg>
+
+            <svg viewBox="0 0 1920 140" class={style.topWave}>
+              <path
+                d="M1920 0l-107 28c-106 29-320 85-533 93-213 7-427-36-640-50s-427 0-533 7L0 85v171h1920z"
+                class={style.subWave}
+              />
+              <path
+                d="M0 129l64-26c64-27 192-81 320-75 128 5 256 69 384 64 128-6 256-80 384-91s256 43 384 70c128 26 256 26 320 26h64v96H0z"
+                class={style.mainWave}
+              />
+            </svg>
+            <div class={style.contentPadding}>
+              <p class={style.demoTitle}>
+                Or <strong>try one</strong> of these:
+              </p>
+              <ul class={style.demos}>
+                {demos.map((demo, i) => (
+                  <li>
+                    <button
+                      class="unbutton"
+                      onClick={(event) => this.onDemoClick(i, event)}
+                    >
+                      <div class={style.demoContainer}>
+                        <div class={style.demoIconContainer}>
+                          <img
+                            class={style.demoIcon}
+                            src={demo.iconUrl}
+                            alt={demo.description}
+                          />
+                          {fetchingDemoIndex === i && (
+                            <div class={style.demoLoader}>
+                              <loading-spinner />
+                            </div>
+                          )}
+                        </div>
+                        <div class={style.demoSize}>{demo.size}</div>
                       </div>
-                      <div class={style.demoSize}>{demo.size}</div>
-                    </div>
-                  </button>
-                </li>
-              ))}
-            </ul>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div class={style.bottomWave}>
+            <svg viewBox="0 0 1920 79" class={style.topWave}>
+              <path
+                d="M0 59l64-11c64-11 192-34 320-43s256-5 384 4 256 23 384 34 256 21 384 14 256-30 320-41l64-11v94H0z"
+                class={style.infoWave}
+              />
+            </svg>
           </div>
         </div>
 
-        <div class={style.bottomWave}>
-          <svg viewBox="0 0 1920 79" class={style.topWave}>
-            <path
-              d="M0 59l64-11c64-11 192-34 320-43s256-5 384 4 256 23 384 34 256 21 384 14 256-30 320-41l64-11v94H0z"
-              class={style.infoWave}
-            />
-          </svg>
-        </div>
-
-        <section class={style.info}>
+        {/* <section class={style.info}>
           <div class={style.infoContainer}>
             <SlideOnScroll>
               <div class={style.infoContent}>
@@ -424,7 +445,7 @@ export default class Intro extends Component<Props, State> {
               </div>
             </SlideOnScroll>
           </div>
-        </section>
+        </section> */}
 
         <footer class={style.footer}>
           <div class={style.footerContainer}>
@@ -438,13 +459,13 @@ export default class Intro extends Component<Props, State> {
               <footer class={style.footerItems}>
                 <a
                   class={style.footerLink}
-                  href="https://github.com/GoogleChromeLabs/squoosh/blob/dev/README.md#privacy"
+                  href="https://github.com/lienghongky/squoosh/blob/dev/README.md#privacy"
                 >
                   Privacy
                 </a>
                 <a
                   class={style.footerLinkWithLogo}
-                  href="https://github.com/GoogleChromeLabs/squoosh"
+                  href="https://github.com/lienghongky/squoosh"
                 >
                   <img src={githubLogo} alt="" width="10" height="10" />
                   Source on Github
