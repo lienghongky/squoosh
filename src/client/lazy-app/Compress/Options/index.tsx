@@ -17,6 +17,7 @@ import Toggle from './Toggle';
 import Select from './Select';
 import { Options as QuantOptionsComponent } from 'features/processors/quantize/client';
 import { Options as ResizeOptionsComponent } from 'features/processors/resize/client';
+import { Options as AIOptionsComponent } from 'features/processors/ai/client';
 import { ImportIcon, SaveIcon, SwapIcon } from 'client/lazy-app/icons';
 
 interface Props {
@@ -117,6 +118,13 @@ export default class Options extends Component<Props, State> {
     );
   };
 
+  private onAIOptionsChange = (opts: ProcessorOptions['ai']) => {
+    this.props.onProcessorOptionsChange(
+      this.props.index,
+      cleanMerge(this.props.processorState, 'ai', opts),
+    );
+  };
+
   private onQuantizerOptionsChange = (opts: ProcessorOptions['quantize']) => {
     this.props.onProcessorOptionsChange(
       this.props.index,
@@ -156,57 +164,72 @@ export default class Options extends Component<Props, State> {
       encoder && 'Options' in encoder ? encoder.Options : undefined;
 
     return (
-      <div
-        class={
-          style.optionsScroller +
-          ' ' +
-          (encoderState ? '' : style.originalImage)
-        }
-      >
+      <div class={style.optionsScroller}>
+        <Expander>
+          <h3 class={style.optionsTitle}>
+            <div class={style.titleAndButtons}>
+              AI
+              <button
+                class={style.copyOverButton}
+                title="Copy settings to other side"
+                onClick={this.onCopyToOtherSideClick}
+              >
+                <SwapIcon />
+              </button>
+              <button
+                class={style.saveButton}
+                title="Save side settings"
+                onClick={this.onSaveSideSettingClick}
+              >
+                <SaveIcon />
+              </button>
+              <button
+                class={
+                  style.importButton +
+                  ' ' +
+                  (!this.state.leftSideSettings && this.props.index === 0
+                    ? style.buttonOpacity
+                    : '') +
+                  ' ' +
+                  (!this.state.rightSideSettings && this.props.index === 1
+                    ? style.buttonOpacity
+                    : '')
+                }
+                title="Import saved side settings"
+                onClick={this.onImportSideSettingsClick}
+                disabled={
+                  // Disabled if this side's settings haven't been saved
+                  (!this.state.leftSideSettings && this.props.index === 0) ||
+                  (!this.state.rightSideSettings && this.props.index === 1)
+                }
+              >
+                <ImportIcon />
+              </button>
+            </div>
+          </h3>
+          <label class={style.sectionEnabler}>
+            Enable AI Enhancement
+            {console.log(processorState)}
+            <Toggle
+              name="ai.enable"
+              checked={!!processorState.ai.enabled}
+              onChange={this.onProcessorEnabledChange}
+            />
+          </label>
+          <Expander>
+            {processorState.ai.enabled ? (
+              <AIOptionsComponent
+                options={processorState.ai}
+                onChange={this.onAIOptionsChange}
+              />
+            ) : null}
+          </Expander>
+        </Expander>
         <Expander>
           {!encoderState ? null : (
             <div>
               <h3 class={style.optionsTitle}>
-                <div class={style.titleAndButtons}>
-                  Edit
-                  <button
-                    class={style.copyOverButton}
-                    title="Copy settings to other side"
-                    onClick={this.onCopyToOtherSideClick}
-                  >
-                    <SwapIcon />
-                  </button>
-                  <button
-                    class={style.saveButton}
-                    title="Save side settings"
-                    onClick={this.onSaveSideSettingClick}
-                  >
-                    <SaveIcon />
-                  </button>
-                  <button
-                    class={
-                      style.importButton +
-                      ' ' +
-                      (!this.state.leftSideSettings && this.props.index === 0
-                        ? style.buttonOpacity
-                        : '') +
-                      ' ' +
-                      (!this.state.rightSideSettings && this.props.index === 1
-                        ? style.buttonOpacity
-                        : '')
-                    }
-                    title="Import saved side settings"
-                    onClick={this.onImportSideSettingsClick}
-                    disabled={
-                      // Disabled if this side's settings haven't been saved
-                      (!this.state.leftSideSettings &&
-                        this.props.index === 0) ||
-                      (!this.state.rightSideSettings && this.props.index === 1)
-                    }
-                  >
-                    <ImportIcon />
-                  </button>
-                </div>
+                <div class={style.titleAndButtons}>Edit</div>
               </h3>
               <label class={style.sectionEnabler}>
                 Resize

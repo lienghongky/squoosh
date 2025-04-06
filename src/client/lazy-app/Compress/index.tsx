@@ -30,6 +30,7 @@ import './custom-els/MultiPanel';
 import Results from './Results';
 import WorkerBridge from '../worker-bridge';
 import { resize } from 'features/processors/resize/client';
+import ai from 'features/processors/ai/worker/ai';
 import type SnackBarElement from 'shared/custom-els/snack-bar';
 import { drawableToImageData } from '../util/canvas';
 
@@ -152,7 +153,9 @@ async function processImage(
 ): Promise<ImageData> {
   assertSignal(signal);
   let result = source.preprocessed;
-
+  if (processorState.ai.enabled) {
+    result = await ai(result, processorState.ai);
+  }
   if (processorState.resize.enabled) {
     result = await resize(signal, source, processorState.resize, workerBridge);
   }
