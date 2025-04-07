@@ -235,6 +235,12 @@ export default class Intro extends Component<Props, State> {
             onChange={this.onFileChange}
           />
           <div class={style.main}>
+            <div class={style.toolbarButtons}>
+              <button></button>
+              <button></button>
+              <button></button>
+            </div>
+
             {!__PRERENDER__ && (
               <canvas
                 ref={linkRef(this, 'blobCanvas')}
@@ -249,6 +255,7 @@ export default class Intro extends Component<Props, State> {
                 width="539"
                 height="162"
               />
+              <span class={style.badge}>AI+</span>
             </h1>
             <div class={style.loadImg}>
               {showBlobSVG && (
@@ -360,7 +367,7 @@ export default class Intro extends Component<Props, State> {
               </ul>
             </div>
           </div>
-
+          {/* 
           <div class={style.bottomWave}>
             <svg viewBox="0 0 1920 79" class={style.topWave}>
               <path
@@ -368,7 +375,7 @@ export default class Intro extends Component<Props, State> {
                 class={style.infoWave}
               />
             </svg>
-          </div>
+          </div> */}
         </div>
 
         {/* <section class={style.info}>
@@ -449,12 +456,12 @@ export default class Intro extends Component<Props, State> {
 
         <footer class={style.footer}>
           <div class={style.footerContainer}>
-            <svg viewBox="0 0 1920 79" class={style.topWave}>
+            {/* <svg viewBox="0 0 1920 79" class={style.topWave}>
               <path
                 d="M0 59l64-11c64-11 192-34 320-43s256-5 384 4 256 23 384 34 256 21 384 14 256-30 320-41l64-11v94H0z"
                 class={style.footerWave}
               />
-            </svg>
+            </svg> */}
             <div class={style.footerPadding}>
               <footer class={style.footerItems}>
                 <a
