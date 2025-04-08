@@ -30,8 +30,6 @@ export default async function process(
   data: ImageData,
   opts: Options,
 ): Promise<ImageData> {
-  console.log('Processing image with AI options:', opts);
-
   const weights = {
     raindrop: '/c/models/UAV-Rain1k_Best.onnx',
     rainstreak: '/c/models/Rain13k_Best.onnx',
@@ -56,9 +54,6 @@ export default async function process(
 
   let paddedData: ImageData;
   if (paddedWidth !== data.width || paddedHeight !== data.height) {
-    console.log(
-      `Padding image from ${data.width}x${data.height} to ${paddedWidth}x${paddedHeight}`,
-    );
     paddedData = ImageHelper.padImageData(data, paddedWidth, paddedHeight);
   } else {
     paddedData = data;

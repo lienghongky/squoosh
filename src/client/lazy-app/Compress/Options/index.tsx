@@ -209,7 +209,6 @@ export default class Options extends Component<Props, State> {
           </h3>
           <label class={style.sectionEnabler}>
             Enable AI Enhancement
-            {console.log(processorState)}
             <Toggle
               name="ai.enable"
               checked={!!processorState.ai.enabled}
