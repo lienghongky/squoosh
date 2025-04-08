@@ -2,14 +2,17 @@ import { h, Component } from 'preact';
 
 import { linkRef } from 'shared/prerendered-app/util';
 import '../../custom-els/loading-spinner';
+
 import logo from 'url:./imgs/logo.svg';
 import githubLogo from 'url:./imgs/github-logo.svg';
 import largePhoto from 'url:./imgs/demos/demo-large-photo.jpg';
 import artwork from 'url:./imgs/demos/demo-artwork.jpg';
+
 import deviceScreen from 'url:./imgs/demos/demo-device-screen.png';
 import largePhotoIcon from 'url:./imgs/demos/icon-demo-large-photo.jpg';
 import artworkIcon from 'url:./imgs/demos/icon-demo-artwork.jpg';
 import deviceScreenIcon from 'url:./imgs/demos/icon-demo-device-screen.jpg';
+
 import smallSectionAsset from 'url:./imgs/info-content/small.svg';
 import simpleSectionAsset from 'url:./imgs/info-content/simple.svg';
 import secureSectionAsset from 'url:./imgs/info-content/secure.svg';
@@ -21,35 +24,68 @@ import 'shared/custom-els/snack-bar';
 import { startBlobs } from './blob-anim/meta';
 import SlideOnScroll from './SlideOnScroll';
 
+import lolv1 from 'url:./imgs/demos/lolv1.png';
+import lolv2 from 'url:./imgs/demos/lolv2.png';
+import rainstreak from 'url:./imgs/demos/rainstreak.png';
+import raindrop from 'url:./imgs/demos/raindrop.png';
+
 const demos = [
   {
-    description: 'Large photo',
+    description: 'Low Light v1',
     size: '2.8MB',
-    filename: 'photo.jpg',
-    url: largePhoto,
-    iconUrl: largePhotoIcon,
+    filename: 'lolv1.jpg',
+    url: lolv1,
+    iconUrl: lolv1,
   },
   {
-    description: 'Artwork',
+    description: 'Rain Drop',
     size: '2.9MB',
-    filename: 'art.jpg',
-    url: artwork,
-    iconUrl: artworkIcon,
+    filename: 'raindrop.png',
+    url: raindrop,
+    iconUrl: raindrop,
   },
   {
-    description: 'Device screen',
+    description: 'Low Light v2',
     size: '1.6MB',
-    filename: 'pixel3.png',
-    url: deviceScreen,
-    iconUrl: deviceScreenIcon,
+    filename: 'lolv2.png',
+    url: lolv2,
+    iconUrl: lolv2,
   },
   {
-    description: 'SVG icon',
+    description: 'Rain Streak',
     size: '13KB',
-    filename: 'squoosh.svg',
-    url: logo,
-    iconUrl: logoIcon,
+    filename: 'rainstreak.png',
+    url: rainstreak,
+    iconUrl: rainstreak,
   },
+  // {
+  //   description: 'Large photo',
+  //   size: '2.8MB',
+  //   filename: 'photo.jpg',
+  //   url: largePhoto,
+  //   iconUrl: largePhotoIcon,
+  // },
+  // {
+  //   description: 'Artwork',
+  //   size: '2.9MB',
+  //   filename: 'art.jpg',
+  //   url: artwork,
+  //   iconUrl: artworkIcon,
+  // },
+  // {
+  //   description: 'Device screen',
+  //   size: '1.6MB',
+  //   filename: 'pixel3.png',
+  //   url: deviceScreen,
+  //   iconUrl: deviceScreenIcon,
+  // },
+  // {
+  //   description: 'SVG icon',
+  //   size: '13KB',
+  //   filename: 'squoosh.svg',
+  //   url: logo,
+  //   iconUrl: logoIcon,
+  // },
 ] as const;
 
 const blobAnimImport =
@@ -358,6 +394,9 @@ export default class Intro extends Component<Props, State> {
                               <loading-spinner />
                             </div>
                           )}
+                        </div>
+                        <div>
+                          <i class={style.demoLable}>{demo.description}</i>
                         </div>
                         <div class={style.demoSize}>{demo.size}</div>
                       </div>

@@ -36,8 +36,8 @@ export function imageDataToTensor(
 
 export function tensorToImageData(
   tensor: Tensor,
-  width: number,
   height: number,
+  width: number,
 ): ImageData {
   // 1. Validate tensor dimensions
   if (
@@ -73,4 +73,69 @@ export function tensorToImageData(
 
   // 5. Create and return the ImageData object
   return new ImageData(imageDataArray, width, height);
+}
+
+export function padImageData(
+  data: ImageData,
+  paddedWidth: number,
+  paddedHeight: number,
+): ImageData {
+  // 1. Create a new Uint8ClampedArray for the padded image
+  const paddedArray = new Uint8ClampedArray(paddedWidth * paddedHeight * 4);
+
+  // 2. Fill the padded array with transparent pixels (default alpha = 0)
+  paddedArray.fill(0);
+
+  // 3. Copy the original image data into the padded array
+  for (let y = 0; y < data.height; y++) {
+    for (let x = 0; x < data.width; x++) {
+      const srcIndex = (y * data.width + x) * 4;
+      const destIndex = (y * paddedWidth + x) * 4;
+
+      paddedArray[destIndex] = data.data[srcIndex]; // R
+      paddedArray[destIndex + 1] = data.data[srcIndex + 1]; // G
+      paddedArray[destIndex + 2] = data.data[srcIndex + 2]; // B
+      paddedArray[destIndex + 3] = data.data[srcIndex + 3]; // A
+    }
+  }
+
+  // 4. Return the new ImageData object
+  return new ImageData(paddedArray, paddedWidth, paddedHeight);
+}
+
+export function cropImageData(
+  data: ImageData,
+  cropX: number,
+  cropY: number,
+  cropWidth: number,
+  cropHeight: number,
+): ImageData {
+  // 1. Validate crop dimensions
+  if (
+    cropX < 0 ||
+    cropY < 0 ||
+    cropX + cropWidth > data.width ||
+    cropY + cropHeight > data.height
+  ) {
+    throw new Error('Invalid crop dimensions or position.');
+  }
+
+  // 2. Create a new Uint8ClampedArray for the cropped image
+  const croppedArray = new Uint8ClampedArray(cropWidth * cropHeight * 4);
+
+  // 3. Copy the cropped region from the original image data
+  for (let y = 0; y < cropHeight; y++) {
+    for (let x = 0; x < cropWidth; x++) {
+      const srcIndex = ((cropY + y) * data.width + (cropX + x)) * 4;
+      const destIndex = (y * cropWidth + x) * 4;
+
+      croppedArray[destIndex] = data.data[srcIndex]; // R
+      croppedArray[destIndex + 1] = data.data[srcIndex + 1]; // G
+      croppedArray[destIndex + 2] = data.data[srcIndex + 2]; // B
+      croppedArray[destIndex + 3] = data.data[srcIndex + 3]; // A
+    }
+  }
+
+  // 4. Return the new ImageData object
+  return new ImageData(croppedArray, cropWidth, cropHeight);
 }

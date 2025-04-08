@@ -50,6 +50,20 @@ export default async function process(
   // Create a copy of the image data
   const result = new Uint8ClampedArray(data.data);
 
+  // Ensure the image dimensions are divisible by 16
+  const paddedWidth: number = Math.ceil(data.width / 16) * 16;
+  const paddedHeight: number = Math.ceil(data.height / 16) * 16;
+
+  let paddedData: ImageData;
+  if (paddedWidth !== data.width || paddedHeight !== data.height) {
+    console.log(
+      `Padding image from ${data.width}x${data.height} to ${paddedWidth}x${paddedHeight}`,
+    );
+    paddedData = ImageHelper.padImageData(data, paddedWidth, paddedHeight);
+  } else {
+    paddedData = data;
+  }
+
   try {
     const sessionOptions: ort.InferenceSession.SessionOptions = {
       // executionProviders: ['webgl','wasm'],
@@ -61,11 +75,11 @@ export default async function process(
       sessionOptions,
     );
 
-    var inputTensor = ImageHelper.imageDataToTensor(data, [
+    var inputTensor = ImageHelper.imageDataToTensor(paddedData, [
       1,
       3,
-      data.height,
-      data.width,
+      paddedHeight,
+      paddedWidth,
     ]);
 
     const session = await sessionPromise;
@@ -77,11 +91,19 @@ export default async function process(
     const output = await session.run(feeds);
     const outputTensor = output.output.data as Float32Array;
 
-    return ImageHelper.tensorToImageData(
+    const full_output = ImageHelper.tensorToImageData(
       output.output,
+      paddedHeight,
+      paddedWidth,
+    );
+    return ImageHelper.cropImageData(
+      full_output,
+      0,
+      0,
       data.width,
       data.height,
     );
+
     // for (let i = 0; i < result.length; i++) {
     //   result[i] = Math.min(255, Math.max(0, outputTensor[i] * 255)); // Denormalize to [0, 255]
     // }
