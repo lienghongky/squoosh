@@ -34,7 +34,7 @@ export default async function process(
 
   const weights = {
     raindrop: '/c/models/UAV-Rain1k_Best.onnx',
-    rainstreak: '/c/models/UAV-Rain1k_Best.onnx',
+    rainstreak: '/c/models/Rain13k_Best.onnx',
     lolv1: '/c/models/LOLv1_Best.onnx',
     lolv2: '/c/models/LOLv2_Best.onnx',
   };
