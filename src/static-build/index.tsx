@@ -55,13 +55,13 @@ interface Output {
 const toOutput: Output = {
   'index.html': renderPage(<IndexPage />),
   'manifest.json': JSON.stringify({
-    name: 'Squoosh',
-    short_name: 'Squoosh',
+    name: 'Squoosh AI+',
+    short_name: 'Squoosh AI+',
     start_url: '/?utm_medium=PWA&utm_source=launcher',
     display: 'standalone',
     orientation: 'any',
     background_color: '#fff',
-    theme_color: '#ff3385',
+    theme_color: '#09f',
     icons: [
       {
         src: iconLarge.default,

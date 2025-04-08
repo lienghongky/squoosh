@@ -1,6 +1,8 @@
 {
   "private": true,
-  "name": "squoosh",
+  "name": "squoosh-ai",
+  "description": "Squoosh AI is a web app that allows you to compress images using machine learning models.",
+  "homepage": "https://compress.coxomo.com/",
   "version": "2.0.0",
   "license": "apache-2.0",
   "scripts": {

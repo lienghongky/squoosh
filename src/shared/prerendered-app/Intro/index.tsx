@@ -25,35 +25,51 @@ import { startBlobs } from './blob-anim/meta';
 import SlideOnScroll from './SlideOnScroll';
 
 import lolv1 from 'url:./imgs/demos/lolv1.png';
+import lolv1_1 from 'url:./imgs/demos/lolv1_angkor.png';
 import lolv2 from 'url:./imgs/demos/lolv2.png';
 import rainstreak from 'url:./imgs/demos/rainstreak.png';
+import rainstreak_1 from 'url:./imgs/demos/rainstreak_sr.jpg';
 import raindrop from 'url:./imgs/demos/raindrop.png';
 
 const demos = [
   {
+    description: 'Low Light v1(Angkorwat)',
+    size: '123.43KB',
+    filename: 'lolv1_angkorwat.jpg',
+    url: lolv1_1,
+    iconUrl: lolv1_1,
+  },
+  {
+    description: 'Rain Streak(Siem Reap)',
+    size: '227.25KB',
+    filename: 'raindrop.png',
+    url: rainstreak_1,
+    iconUrl: rainstreak_1,
+  },
+  {
     description: 'Low Light v1',
-    size: '2.8MB',
+    size: '316.5KB',
     filename: 'lolv1.jpg',
     url: lolv1,
     iconUrl: lolv1,
   },
   {
     description: 'Rain Drop',
-    size: '2.9MB',
+    size: '754.88KB',
     filename: 'raindrop.png',
     url: raindrop,
     iconUrl: raindrop,
   },
   {
     description: 'Low Light v2',
-    size: '1.6MB',
+    size: '154.87KB',
     filename: 'lolv2.png',
     url: lolv2,
     iconUrl: lolv2,
   },
   {
     description: 'Rain Streak',
-    size: '13KB',
+    size: '289.53KB',
     filename: 'rainstreak.png',
     url: rainstreak,
     iconUrl: rainstreak,
