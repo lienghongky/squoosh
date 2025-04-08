@@ -1052,7 +1052,7 @@ export default class Compress extends Component<Props, State> {
                   this.state.collapsed_1 ? style.hide : ''
                 }`}
               >
-                {options[0]}
+                {options[1]}
               </div>
               <div class={style.results}>
                 <button

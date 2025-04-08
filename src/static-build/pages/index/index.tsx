@@ -27,14 +27,14 @@ interface Props {}
 const Index: FunctionalComponent<Props> = () => (
   <html lang="en">
     <head>
-      <title>Squoosh</title>
+      <title>Squoosh AI+</title>
       <meta
         name="description"
         content="Squoosh is the ultimate image optimizer that allows you to compress and compare images with different codecs in your browser."
       />
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:site" content="@SquooshApp" />
-      <meta property="og:title" content="Squoosh" />
+      <meta property="og:title" content="Squoosh AI+" />
       <meta property="og:type" content="website" />
       <meta property="og:image" content={`${siteOrigin}${ogImage}`} />
       <meta
@@ -60,7 +60,7 @@ const Index: FunctionalComponent<Props> = () => (
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <link rel="shortcut icon" href={favicon} />
       <link rel="apple-touch-icon" href={ogImage} />
-      <meta name="theme-color" content="#ff3385" />
+      <meta name="theme-color" content="#09f" />
       <link rel="manifest" href="/manifest.json" />
       <link rel="canonical" href={siteOrigin} />
       <style
