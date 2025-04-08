@@ -154,7 +154,8 @@ async function processImage(
   assertSignal(signal);
   let result = source.preprocessed;
   if (processorState.ai.enabled) {
-    result = await ai(result, processorState.ai);
+    console.log('AI compress index');
+    result = await workerBridge.ai(signal, result, processorState.ai);
   }
   if (processorState.resize.enabled) {
     result = await resize(signal, source, processorState.resize, workerBridge);

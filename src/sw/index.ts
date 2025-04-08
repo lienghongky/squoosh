@@ -5,6 +5,7 @@ import {
   cacheBasics,
   cacheAdditionalProcessors,
   serveShareTarget,
+  cacheAIModels,
 } from './util';
 import { get } from 'idb-keyval';
 import { shouldCacheDynamically } from './to-cache';
@@ -81,12 +82,16 @@ self.addEventListener('fetch', (event) => {
 });
 
 self.addEventListener('message', (event) => {
+  console.log('SW message', event.data);
   switch (event.data) {
     case 'cache-all':
       event.waitUntil(cacheAdditionalProcessors(versionedCache));
       break;
     case 'skip-waiting':
       self.skipWaiting();
+      break;
+    case 'cache-ai-models':
+      event.waitUntil(cacheAIModels(versionedCache));
       break;
   }
 });

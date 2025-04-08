@@ -39,8 +39,18 @@ main();
   ga('send', 'pageview', '/index.html', { title: 'Squoosh' });
   // Load the GA script without keeping the browser spinner going.
   addEventListener('load', () => {
-    const script = document.createElement('script');
-    script.src = 'https://www.google-analytics.com/analytics.js';
-    document.head.appendChild(script);
+    // Google Tag Manager script
+    const gtagScript = document.createElement('script');
+    gtagScript.async = true;
+    gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-JJLLMHD473';
+    document.head.appendChild(gtagScript);
+
+    const gtagInlineScript = document.createElement('script');
+    gtagInlineScript.textContent = `
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-JJLLMHD473');
+  `;
   });
 }

@@ -60,3 +60,7 @@ declare var ga: {
 };
 
 declare const __PRODUCTION__: boolean;
+
+// declare module 'onnxruntime-common'{
+//   type HTMLImageElement = any; // Replace `any` with a more specific type if needed
+// }

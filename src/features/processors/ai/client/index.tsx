@@ -35,9 +35,10 @@ export class Options extends Component<Props, State> {
       'form',
     ) as HTMLFormElement;
     const { options } = this.props;
+    const formData = new FormData(form);
 
     const newOptions: AIOptions = {
-      task: 'rain-removal',
+      task: formData.get('task') as string,
       mode: 0,
       intensity: 200,
     };
@@ -50,15 +51,12 @@ export class Options extends Component<Props, State> {
         <Expander>
           <label class={style.optionTextFirst}>
             Method:
-            <Select
-              name="resizeMethod"
-              // value={options.method}
-              onChange={this.onChange}
-            >
-              <option value="lanczos3">Rain Streak Removal</option>
-              <option value="mitchell">Rain Drop Removal</option>
-              <option value="triangle">Noise Removal</option>
-              <option value="catrom">Low Light Enhancement</option>
+            <Select name="task" value={options.task} onChange={this.onChange}>
+              <option value="">None</option>
+              <option value="rainstreak">Rain Streak Removal</option>
+              <option value="raindrop">Rain Drop Removal</option>
+              <option value="lolv1">Low Light v1</option>
+              <option value="lolv2">Low Light v2</option>
             </Select>
           </label>
         </Expander>

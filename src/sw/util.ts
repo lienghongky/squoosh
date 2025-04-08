@@ -1,4 +1,4 @@
-import { initial, theRest } from './to-cache';
+import { initial, theRest, aiModel } from './to-cache';
 
 // Give TypeScript the correct global.
 declare var self: ServiceWorkerGlobalScope;
@@ -97,6 +97,12 @@ export async function cacheBasics(cacheName: string) {
 export async function cacheAdditionalProcessors(cacheName: string) {
   const cache = await caches.open(cacheName);
   return cache.addAll(urlsToRequests(await theRest));
+}
+
+export async function cacheAIModels(cacheName: string) {
+  console.log('Caching AI models' + cacheName);
+  const cache = await caches.open(cacheName);
+  return cache.addAll(urlsToRequests(await aiModel));
 }
 
 const nextMessageResolveMap = new Map<string, (() => void)[]>();

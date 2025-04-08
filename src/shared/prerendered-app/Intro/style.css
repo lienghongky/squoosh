@@ -400,12 +400,17 @@
 }
 
 .toolbarButtons button {
-  width: 1rem;
-  height: 1rem;
-  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 4px;
   border: none;
   background: gray;
   cursor: pointer;
+}
+
+.toolbarButtons button:hover {
+  scale: 1.2;
+  transition: scale 200ms ease-in-out;
 }
 
 .toolbarButtons button:nth-child(1) {

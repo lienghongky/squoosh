@@ -150,3 +150,19 @@ export const theRest = (async () => {
 
   return [...new Set(items)];
 })();
+
+export const aiModel = (async () => {
+  const modelUrls = [''];
+
+  const items: string[] = [];
+  for (const url of modelUrls) {
+    const response = await fetch(url);
+    if (response.ok) {
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      items.push(blobUrl);
+    }
+  }
+
+  return [...new Set(items)];
+})();

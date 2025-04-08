@@ -44,6 +44,7 @@
     "preact-render-to-string": "^5.1.11",
     "prettier": "^2.4.1",
     "rollup": "^2.38.0",
+    "rollup-plugin-copy": "^3.5.0",
     "serve": "^11.3.2",
     "typescript": "^4.4.4",
     "wasm-feature-detect": "^1.2.11",
@@ -53,5 +54,9 @@
     "*.{js,css,json,md,ts,tsx}": "prettier --write",
     "*.{c,h,cpp,hpp}": "clang-format -i",
     "*.rs": "rustfmt"
+  },
+  "dependencies": {
+    "jimp": "^1.6.0",
+    "onnxruntime-web": "^1.15.1"
   }
 }

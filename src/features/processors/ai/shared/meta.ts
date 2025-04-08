@@ -17,7 +17,7 @@ export interface Options {
 }
 
 export const defaultOptions: Options = {
-  task: 'rain_drop_removal',
+  task: '',
   mode: 0,
   intensity: 100,
 };

@@ -11,23 +11,82 @@
  * limitations under the License.
  */
 
-import { initEmscriptenModule } from 'features/worker-utils';
+type HTMLImageElement = any;
 import { Options } from '../shared/meta';
+import * as ImageHelper from '../../../worker-utils/imageHelper';
+import * as ort from 'onnxruntime-web';
+
+ort.env.debug = true;
+ort.env.logLevel = 'verbose';
+
+ort.env.wasm.wasmPaths = {
+  'ort-wasm.wasm': '/c/ort-wasm.wasm',
+  'ort-wasm-simd.wasm': '/c/ort-wasm-simd.wasm',
+  'ort-wasm-threaded.wasm': '/c/ort-wasm-threaded.wasm',
+  'ort-wasm-simd-threaded.wasm': '/c/ort-wasm-simd-threaded.wasm',
+};
 
 export default async function process(
   data: ImageData,
   opts: Options,
 ): Promise<ImageData> {
   console.log('Processing image with AI options:', opts);
+
+  const weights = {
+    raindrop: '/c/models/UAV-Rain1k_Best.onnx',
+    rainstreak: '/c/models/UAV-Rain1k_Best.onnx',
+    lolv1: '/c/models/LOLv1_Best.onnx',
+    lolv2: '/c/models/LOLv2_Best.onnx',
+  };
+
+  if (!opts.task || opts.task.trim() === '') {
+    return data;
+  }
+  const task = opts.task as keyof typeof weights;
+  const modelPath = weights[task];
+  if (!modelPath) {
+    throw new Error(`Invalid task: ${task}`);
+  }
   // Create a copy of the image data
   const result = new Uint8ClampedArray(data.data);
 
-  // Simple modification: Invert colors
-  for (let i = 0; i < result.length; i += 4) {
-    result[i] = 255 - result[i]; // Red
-    result[i + 1] = 255 - result[i + 1]; // Green
-    result[i + 2] = 255 - result[i + 2]; // Blue
-    // Alpha (result[i + 3]) remains unchanged
+  try {
+    const sessionOptions: ort.InferenceSession.SessionOptions = {
+      // executionProviders: ['webgl','wasm'],
+      // graphOptimizationLevel: 'all'
+    };
+
+    const sessionPromise = ort.InferenceSession.create(
+      modelPath,
+      sessionOptions,
+    );
+
+    var inputTensor = ImageHelper.imageDataToTensor(data, [
+      1,
+      3,
+      data.height,
+      data.width,
+    ]);
+
+    const session = await sessionPromise;
+    const feeds = {
+      input: inputTensor,
+    };
+
+    // Run the inference
+    const output = await session.run(feeds);
+    const outputTensor = output.output.data as Float32Array;
+
+    return ImageHelper.tensorToImageData(
+      output.output,
+      data.width,
+      data.height,
+    );
+    // for (let i = 0; i < result.length; i++) {
+    //   result[i] = Math.min(255, Math.max(0, outputTensor[i] * 255)); // Denormalize to [0, 255]
+    // }
+  } catch (error) {
+    console.error('Error during AI processing:', error);
   }
 
   return new ImageData(result, data.width, data.height);

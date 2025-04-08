@@ -18,6 +18,8 @@ import commonjs from '@rollup/plugin-commonjs';
 import terser from '@rollup/plugin-terser';
 import OMT from '@surma/rollup-plugin-off-main-thread';
 import replace from '@rollup/plugin-replace';
+import copy from 'rollup-plugin-copy';
+
 import { importMetaAssets } from '@web/rollup-plugin-import-meta-assets';
 
 import simpleTS from './lib/simple-ts';
@@ -92,6 +94,29 @@ export default async function ({ watch }) {
     urlPlugin(),
     dataURLPlugin(),
     cssPlugin(),
+    copy({
+      targets: [
+        {
+          // Adjust this to match your package + file(s)
+          src: 'node_modules/onnxruntime-web/dist/*.wasm',
+          dest: dir + '/static/c/',
+        },
+        {
+          // Adjust this to match your package + file(s)
+          src: 'codecs/onnx/models/*.onnx',
+          dest: dir + '/static/c/models/',
+        },
+        {
+          src: 'node_modules/long/dist/long.js',
+          dest: dir + '/static/c/',
+        },
+        {
+          src: 'node_modules/buffer/index.js',
+          dest: dir + '/static/c/buffer/',
+        },
+      ],
+      flatten: true, // optional: removes folder structure
+    }),
   ];
 
   return {
@@ -146,6 +171,10 @@ export default async function ({ watch }) {
       ),
       ...commonPlugins(),
       emitFiles({ include: '**/*', root: path.join(__dirname, 'src', 'copy') }),
+      // emitFiles({
+      //   include: '**/*.{onnx,wasm}',
+      //   root: path.join(__dirname, 'codecs', 'onnx'),
+      // }),
       nodeExternalPlugin(),
       featurePlugin(),
       replace({ __PRERENDER__: true, __PRODUCTION__: isProduction }),
