@@ -1005,10 +1005,10 @@ export default class Compress extends Component<Props, State> {
         {mobileView ? (
           <div class={style.options}>
             <multi-panel class={style.multiPanel} open-one-only>
-              <div class={style.options1Theme}>{results[0]}</div>
-              <div class={style.options1Theme}>{options[0]}</div>
               <div class={style.options2Theme}>{results[1]}</div>
               <div class={style.options2Theme}>{options[1]}</div>
+              <div class={style.options1Theme}>{results[0]}</div>
+              <div class={style.options1Theme}>{options[0]}</div>
             </multi-panel>
           </div>
         ) : (
