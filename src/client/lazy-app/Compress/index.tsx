@@ -70,6 +70,9 @@ interface State {
   /** Source image load */
   loading: boolean;
   mobileView: boolean;
+  collapsed_0: boolean;
+  collapsed_1: boolean;
+  /** Preprocessor state */
   preprocessorState: PreprocessorState;
   encodedPreprocessorState?: PreprocessorState;
 }
@@ -286,6 +289,8 @@ export default class Compress extends Component<Props, State> {
   state: State = {
     source: undefined,
     loading: false,
+    collapsed_0: false,
+    collapsed_1: false,
     preprocessorState: defaultPreprocessorState,
     // Tasking catched side settings if available otherwise taking default settings
     sides: [
@@ -310,8 +315,8 @@ export default class Compress extends Component<Props, State> {
             latestSettings: {
               processorState: defaultProcessorState,
               encoderState: {
-                type: 'mozJPEG',
-                options: encoderMap.mozJPEG.meta.defaultOptions,
+                type: 'browserPNG',
+                options: encoderMap.browserPNG.meta.defaultOptions,
               },
             },
             loading: false,
@@ -1009,12 +1014,69 @@ export default class Compress extends Component<Props, State> {
         ) : (
           [
             <div class={style.options1} key="options1">
-              {options[0]}
-              {results[0]}
+              <div
+                class={`${style.optionPanel} ${
+                  this.state.collapsed_0 ? style.hide : ''
+                }`}
+              >
+                {options[0]}
+              </div>
+
+              <div class={style.results}>
+                {results[0]}
+                <button
+                  onClick={() => {
+                    console.log(this.state.collapsed_0);
+                    this.setState({ collapsed_0: !this.state.collapsed_0 });
+                  }}
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                  >
+                    {this.state.collapsed_0 ? (
+                      <path d="M7 14l5-5 5 5H7z" /> // Arrow Down
+                    ) : (
+                      <path d="M7 10l5 5 5-5H7z" /> // Arrow Up
+                    )}
+                  </svg>
+                </button>
+              </div>
             </div>,
             <div class={style.options2} key="options2">
-              {options[1]}
-              {results[1]}
+              <div
+                class={`${style.optionPanel} ${
+                  this.state.collapsed_1 ? style.hide : ''
+                }`}
+              >
+                {options[0]}
+              </div>
+              <div class={style.results}>
+                <button
+                  onClick={() => {
+                    console.log(this.state.collapsed_1);
+                    this.setState({ collapsed_1: !this.state.collapsed_1 });
+                  }}
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                  >
+                    {this.state.collapsed_1 ? (
+                      <path d="M7 14l5-5 5 5H7z" /> // Arrow Down
+                    ) : (
+                      <path d="M7 10l5 5 5-5H7z" /> // Arrow Up
+                    )}
+                  </svg>
+                </button>
+                {results[1]}
+              </div>
             </div>,
           ]
         )}

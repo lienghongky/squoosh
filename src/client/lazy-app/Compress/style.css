@@ -148,3 +148,44 @@
 .back-x {
   fill: var(--white);
 }
+
+.results {
+  padding-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.results button {
+  margin: 0 5px;
+  border-radius: 4px;
+  background-color: var(--main-theme-color);
+  border: none;
+  color: var(--white);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: var(--hot-theme-color);
+  }
+
+  &:focus {
+    outline: 2px solid var(--hot-theme-color);
+    outline-offset: 2px;
+  }
+}
+
+.optionPanel {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+.optionPanel.hide {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  display: none; /*Hides the element after the animation */
+}

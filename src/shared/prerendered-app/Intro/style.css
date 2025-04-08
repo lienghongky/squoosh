@@ -312,7 +312,7 @@
 
 .demoLable {
   color: var(--white);
-  font-size: 0.5rem;
+  font-size: 0.8rem;
   text-align: center;
   padding: 2px;
 }
@@ -324,7 +324,7 @@
   justify-content: center;
   padding: 0;
   margin: 3rem auto;
-  --demo-size: 60px;
+  --demo-size: 100px;
   grid-template-columns: repeat(auto-fit, var(--demo-size));
 
   @media (min-width: 740px) {
